@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <!-- footer -->
+    <%-include('../partials/navbar.ejs') %>
+    
+    <div class="profile-container">
+      <header style="background-image: url(<%=user?.coverImage%>)">
+        <div class="icons-container">
+          <p>
+            <a href="/api/v1/users/upload-cover-photo-form">
+              <img style="width: 30px;"  src="/images/camera.png" />
+            </a>
+          </p>
+
+          <p>
+            <a href="/api/v1/users/<%=user?._id%> ">
+              <img style="width: 40px;"  src="/images/edit.png" />
+            </a>
+          </p>
+
+          <p>
+            <a href="/api/v1/users/update-user-password ">
+              <img style="width: 40px;"  src="/images/password.png" />
+            </a>
+          </p>
+        </div>
+        <!-- upload cover image icon -->
+      </header>
+
+      <!-- profile image -->
+      <div class="profile-img">
+        <img src="<%=user?.profileImage%> " alt="profile image" />
+        <!-- upload profile image icon -->
+        <a href="/api/v1/users/upload-profile-photo-form">
+          <img style="width: 30px; height: auto;"  src="/images/camera.png" />
+        </a>
+      </div>
+      <!-- personal details -->
+      <div class="personal-container">
+        <div class="details-wrapper">
+          <div class="details">
+            <img style="width: 20px; height: auto;"  src="/images/woman.png" />
+            <p>Name: <%=user?.fullname%></p>
+          </div>
+          <div class="details">
+            <img style="width: 30px; height: auto;"  src="/images/email.png" />
+            <p>Email: <%=user?.email%></p>
+          </div>
+
+          <!-- date joined -->
+          <div class="details">
+            <img style="width: 30px; height: auto;"  src="/images/calender.png" />
+            <p>Date Joined: <%=user?.createdAt.toLocaleDateString()%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="latest-post-title">
+      <!-- Icon -->
+      <img style="width: 50px;" src="/images/book.png" />
+      <h1>Latest Posts</h1>
+    </div>
+
+    <!-- content -->
+    <section class="container-flex">
+      <%if(user?.posts?.length <=0){ %>
+      <h1>You have no post</h1>
+      <%}else{%> <%user?.posts?.forEach((post)=>{%>
+      <article class="post-content">
+        <img src="<%=post?.image%> " alt="" class="post-image" />
+        <p class="post-info">
+          <span class="post-author">
+            <img style="width: 20px; height: auto;"  src="/images/adduser.png" />
+            <a href="#"><%=user?.fullname%></a>
+          </span>
+          <span class="post-date">
+            <img style="width: 20px; height: auto;"  src="/images/calender.png" />
+            <time datetime="2020-01-01">
+              <%=post?.createdAt.toLocaleDateString()%>
+            </time>
+          </span>
+        </p>
+        <h1 class="post-title"><%=post?.title%></h1>
+        <p class="post-body"><%=tuncatePost(post?.description)%></p>
+        <!-- category -->
+        <div class="post-category">
+          <span>Category:<%=post?.category%> </span>
+        </div>
+        <a href="/" class="post-read-more">Continue Reading...</a>
+      </article>
+      <% })%> <%}%>
+    </section>
+    <!-- footer -->
+    <%-include('../partials/footer.ejs') %>
+  </body>
+</html>

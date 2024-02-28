@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/uploadPhoto.css" />
+    <title>Upload Cover Photo</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <%-include('../partials/navbar.ejs') %>
+    <div class="form-container">
+      <h1>Upload Cover photo</h1>
+      <p>
+        <img style="width: 30px;"  src="/images/edit.png" />
+      </p>
+      <%if(error){%>
+      <small class="error">
+        <img style="width: 30px;"  src="/images/error.png" />
+        <%=error%>
+      </small>
+      <%}%>
+      <form
+        action="/api/v1/users/cover-photo-upload?_method=put"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <label for="email">Select Imgae</label>
+        <input type="file" name="profile" id="image" />
+        <button type="submit">
+          <img style="width: 30px;"  src="/images/Upload.png" />
+        </button>
+      </form>
+    </div>
+    <!-- footer -->
+    <%-include('../partials/footer.ejs') %>
+  </body>
+</html>

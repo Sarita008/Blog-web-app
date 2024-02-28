@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Blog App</title>
+  </head>
+  <body>
+    <!-- nav -->
+    <%-include('partials/navbar.ejs') %>
+    <!-- header -->
+    <header>
+      <div class="header-content">
+        <h1>You write, We read</h1>
+        <p>
+          Every post is a piece of you, shared with the world.
+        </p>
+        <% if(userAuth){ %>
+        <a href="api/v1/posts/get-post-form">
+          <span>Create New Post</span>
+        </a>
+        <% }else{%>
+        <a href="/api/v1/users/login">
+          <span>Login</span>
+        </a>
+        <a href="/api/v1/users/register">
+          <span>Register</span>
+        </a>
+        <% } %>
+      </div>
+    </header>
+    <!-- Latest post title -->
+
+    <div class="latest-post-title">
+      <!-- Icon -->
+      <div class="icon">
+        <img style="width: 60px;"  src="/images/post.png" />
+      </div>
+      <h1>Latest Posts</h1>
+    </div>
+
+    <!-- content -->
+    <section class="container-flex">
+      <%if(posts?.length <=0){%>
+      <h2>No Post Found</h2>
+      <%}else{%> <%posts?.forEach((post)=>{%> <%console.log(post)%>
+      <article class="post-content">
+        <img src="<%=post?.image%> " alt="" class="post-image" />
+        <p class="post-info">
+          <span class="post-author">
+            <img style="width: 20px;"  src="/images/adduser.png" />
+            <a href="#"> <%=post?.user?.fullname%> </a>
+          </span>
+          <span class="post-date">
+            <img style="width: 20px;"  src="/images/calender.png" />
+            <time datetime="2020-01-01"
+              ><%=post?.createdAt.toLocaleDateString()%></time
+            >
+          </span>
+        </p>
+        <h1 class="post-title"><%=post?.title%></h1>
+        <p class="post-body"><%=tuncatePost(post?.description)%></p>
+        <!-- category -->
+        <div class="post-category">
+          <span>Category: <%=post?.category%></span>
+        </div>
+        <a href="/api/v1/posts/<%=post?._id%> " class="post-read-more"
+          >Continue Reading...</a
+        >
+      </article>
+      <% })%> <%}%>
+    </section>
+    <!-- footer -->
+    <%-include('partials/footer.ejs') %>
+  </body>
+</html>

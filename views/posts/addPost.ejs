@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/form.css" />
+    <title>Post Creation</title>
+  </head>
+  <body>
+    <!-- nav -->
+    <%-include('../partials/navbar.ejs') %>
+    <div class="form-container">
+      <h1>
+        Add Post
+      <!-- add icon -->
+      <img style="width: 30px;" src="/images/add.png" />
+      </h1>
+      <%if(error){%>
+      <small class="error">
+        <img style="width: 20px;" src="/images/error.png" />
+        <%=error%>
+      </small>
+      <%}%>
+      <form enctype="multipart/form-data" action="/api/v1/posts" method="POST">
+        <!-- Post Title -->
+        <div class="input-wrapper">
+          <label for="name">Post Title</label>
+          <input type="text" name="title" id="name" />
+          <!-- err -->
+        </div>
+
+        <!-- Category -->
+        <div class="input-wrapper">
+          <label for="category">Category</label>
+          <input type="text" name="category" id="category" />
+          <!-- err -->
+        </div>
+        <div class="input-wrapper">
+          <!-- Post Body -->
+          <label for="body">Post Body</label>
+          <textarea name="description" id="body" cols="30" rows="10"></textarea>
+          <!-- err -->
+        </div>
+        <!-- Post Image -->
+        <div class="input-wrapper">
+          <label for="image">Post Image</label>
+          <input type="file" name="file" id="image" />
+          <!-- err -->
+        </div>
+
+        <button type="submit">Create</button>
+      </form>
+    </div>
+    <!-- footer -->
+    <%-include('../partials/footer.ejs') %>
+  </body>
+</html>

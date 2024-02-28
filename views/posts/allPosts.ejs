@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/postDetails.css" />
+    <title>Post Details</title>
+  </head>
+  <body>
+    <!-- nav -->
+    <%-include('../partials/navbar.ejs') %>
+    
+    <!-- content -->
+    <section class="container-flex">
+        <%if(posts?.length <=0){%>
+        <h2>No Post Found</h2>
+        <%}else{%> <%posts?.forEach((post)=>{%> <%console.log(post)%>
+        <article class="post-content">
+          <img src="<%=post?.image%> " alt="" class="post-image" />
+          <p class="post-info">
+            <span class="post-author">
+              <img  style="width: 25px;" src="/images/woman.png" />
+              <a href="#"> <%=post?.user?.fullname%> </a>
+            </span>
+            <span class="post-date">
+              <img  style="width: 25px;" src="/images/calender.png" />
+              <time datetime="2020-01-01"
+                ><%=post?.createdAt.toLocaleDateString()%></time
+              >
+            </span>
+          </p>
+          <h1 class="post-title"><%=post?.title%></h1>
+          <p class="post-body"><%=tuncatePost(post?.description)%></p>
+          <!-- category -->
+          <div class="post-category">
+            <span>Category: <%=post?.category%></span>
+          </div>
+          <a href="/api/v1/posts/<%=post?._id%> " class="post-read-more"
+            >Continue Reading...</a
+          >
+        </article>
+        <% })%> <%}%>
+      </section>
+
+
+    <!-- footer -->
+
+    <%-include('../partials/footer.ejs') %>
+  </body>
+</html>
